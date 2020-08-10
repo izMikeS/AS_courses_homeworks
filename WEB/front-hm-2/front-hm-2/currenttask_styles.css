@@ -1,0 +1,102 @@
+﻿body {
+    width: 100%;
+}
+
+.form-element {
+    margin-bottom: 20px;
+}
+
+.center-container {
+    text-align: center;
+}
+
+.form-container {
+    margin: 50px auto;
+    width: 20%;
+}
+.form-container-container {
+    z-index:9999;
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    display:none;
+    background-color: rgba(131, 131, 131, 0.67);
+}
+
+.user-container {
+    width: 100%;
+    min-height: 700px;
+    background-color: #8fa5c7;
+    box-shadow: #585858 0px 0px 10px;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 3%;
+}
+
+.ico-container {
+    width: 10%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.user {
+    background-color: darkblue;
+    display:inline-block;
+    width:97%;
+    border-radius: 3px 4px;
+    margin-top:10px;
+    margin-left: 20px;
+    box-shadow: black 0px 0px 10px;
+    text-align: right;
+}
+
+.login-button {
+    background-color: #a9dd7d;
+}
+
+.signup-button {
+    background-color: #fea15d;
+}
+
+.update-button {
+    background-color: #a9dd7d;
+}
+
+.show-update-button {
+    background-color: black;
+}
+
+.remove-button {
+    background-color: black;
+}
+
+.add-button {
+    background-color: #a9dd7d;
+}
+
+.textbox-container {
+    display: flex;
+}
+.show-add-form {
+    background-color: #fea15d;
+}
+
+.left-textbox {
+    margin-right: 5%;
+}
+.username-span {
+    font-size: 20px;
+    border-radius: 5px;
+    border: solid blue 3px;
+    float: left;
+    margin-left:20%;
+    margin-top: 4px;
+    width: 30%;
+    text-align: center;
+    color:white;
+}

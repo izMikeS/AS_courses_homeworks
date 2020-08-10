@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="components_styles.css" rel="stylesheet" />
+    <link href="currenttask_styles.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <!--header-->
+    <div class="container">
+        <div class="ico-container">
+            <button class="button show-add-form" id="showAddForm">Add new user</button>
+        </div>
+    </div>
+
+    <!--content-->
+
+    <div id="user-container" class="user-container">
+    </div>
+    <div id="addForm" class="form-container-container">
+        <div class="form-container">
+            <div class="form" id="signupform">
+                <div class="textbox-container">
+                    <input id="first-name" type="text" class="form-element textbox left-textbox" placeholder="First Name" required />
+                    <input id="last-name" type="text" class="form-element textbox" placeholder="Last Name" required />
+                </div>
+                <input id="username" type="text" class="form-element textbox" placeholder="Username" required />
+                <input id="email" type="email" class="form-element textbox" placeholder="Email Address" required />
+                <input id="password" type="password" class="form-element textbox" placeholder="Password" required />
+                <input id="phone" type="text" class="form-element textbox" placeholder="Phone" required />
+                <input id="userstatus" type="number" class="form-element textbox" placeholder="User status" required />
+                <div class="center-container">
+                    <button class="form-element button add-button">Sign up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateForm" class="form-container-container">
+        <div class="form-container">
+            <div class="form" id="updateform">
+                <div class="textbox-container">
+                    <input id="first-name-update" type="text" class="form-element textbox left-textbox" placeholder="First Name" required />
+                    <input id="last-name-update" type="text" class="form-element textbox" placeholder="Last Name" required />
+                </div>
+                <input id="email-update" type="email" class="form-element textbox" placeholder="Email Address" required />
+                <input id="password-update" type="password" class="form-element textbox" placeholder="Password" required />
+                <input id="phone-update" type="text" class="form-element textbox" placeholder="Phone" required />
+                <input id="userstatus-update" type="number" class="form-element textbox" placeholder="User status" required />
+                <div class="center-container">
+                    <button class="form-element button update-button">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
