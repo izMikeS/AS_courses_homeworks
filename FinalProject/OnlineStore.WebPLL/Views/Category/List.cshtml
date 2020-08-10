@@ -1,0 +1,28 @@
+﻿@model IEnumerable<OnlineStore.WebPLL.Models.ShortModels.CategoryShortViewModel>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-light" })
+</p>
+<table class="table table-borderless">
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img class="img-ico" src="@Url.Content(item.ImgUrl ?? "n")" />
+            </td>
+            <td>
+                <h5>@item.Name</h5>
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                @Html.ActionLink("🖍", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-warning", title = "Edit" })
+                @Html.ActionLink("❌", "Delete", new { id = item.Id }, new { @class = "btn btn-sm btn-danger", title = "Delete" })
+            </td>
+        </tr>
+    }
+</table>
+@Html.Partial("_PagePartial", "page")

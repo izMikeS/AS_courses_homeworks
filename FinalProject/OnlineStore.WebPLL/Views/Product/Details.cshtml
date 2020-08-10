@@ -1,0 +1,72 @@
+﻿@model OnlineStore.WebPLL.Models.FullModels.ProductFullViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="card mt-5">
+    <div class="row">
+        <aside class="col-sm-5 border-right">
+            <article class="gallery-wrap">
+                <div class="img-big-wrap">
+                    <div> <img style="width:100%; height:100%;" src="@Url.Content(Model.Product.ImgUrl ?? "n")"></div>
+                </div> <!-- slider-product.// -->
+            </article> <!-- gallery-wrap .end// -->
+        </aside>
+        <aside class="col-sm-7">
+            <article class="card-body p-5">
+                <h3 class="title mb-3">@Model.Product.Name</h3>
+
+                <p class="price-detail-wrap">
+                    <span class="price h3 text-warning">
+                        <span class="num">@Model.Product.Price₴</span>
+                    </span>
+                </p> <!-- price-detail-wrap .// -->
+                <dl class="item-property">
+                    <dt>Description</dt>
+                    <dd>
+                        <p>
+                            @Model.Product.Description
+                        </p>
+                    </dd>
+                </dl>
+                <div class="d-flex">
+                    <dl class="param param-feature">
+                        <dt>Category</dt>
+                        <dd><a class="card-link" href="/Product/List?categoryId=@Model.Product.CategoryId">@Model.Category.Name</a></dd>
+                    </dl>  <!-- item-property-hor .// -->
+                    <a class="card-link" href="/Product/List?categoryId=@Model.Product.CategoryId">
+                        <img class="img-ico ml-3" src="@Url.Content(Model.Category.ImgUrl ?? "n")" />
+                    </a>
+                </div>
+                <div class="d-flex">
+                    <dl class="param param-feature">
+                        <dt>Manufacturer</dt>
+                        <dd><a class="card-link" href="/Product/List?manufacturerId=@Model.Product.ManafacturerId">@Model.Manufacturer.Name</a></dd>
+                    </dl>  <!-- item-property-hor .// -->
+                    <a class="card-link" href="/Product/List?manufacturerId=@Model.Product.ManafacturerId">
+                        <img class="img-ico ml-3" src="@Url.Content(Model.Manufacturer.ImgUrl ?? "n")" />
+                    </a>
+                </div>
+                @using (Html.BeginForm("Create", "ProductAtOrder", new { productId = Model.Product.Id, returnUrl = Request.Url.ToString() }))
+                {
+                    <dl class="param param-inline">
+                        <dt>Quantity: </dt>
+                    </dl> <!-- item-property .// -->
+
+                    <div class="row">
+                        <div class="col-4">
+                            <input type="number" class="form-control" name="count" value="1" min="1" />
+                        </div>
+
+                        <div class="col-8 align-self-end">
+                            <input type="submit" class="btn btn-outline-success btn-block" value="🛒 Add to cart" />
+                        </div>
+                    </div>
+                }
+            </article> <!-- card-body.// -->
+        </aside> <!-- col.// -->
+    </div> <!-- row.// -->
+</div> <!-- card.// -->
+
+<a class="btn btn-light mt-5" href="/">< To products</a>

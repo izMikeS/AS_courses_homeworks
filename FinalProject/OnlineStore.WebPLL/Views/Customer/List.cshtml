@@ -1,0 +1,43 @@
+﻿@model IEnumerable<OnlineStore.WebPLL.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="margin-bottom:30px;">Store users</h2>
+
+<table class="table table-borderless">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Login)
+
+
+                @if (item.Roles.Any(r => r.RoleId == ViewBag.AdminRoleId))
+                {
+                    <span style="margin-left:15px;" class="badge badge-danger">Admin</span>
+                }
+                else if (item.Roles.Any(r => r.RoleId == ViewBag.EmployeeRoleId))
+                {
+                    <span style="margin-left:15px;" class="badge badge-primary">Employee</span>
+                }
+                else
+                {
+                    <span style="margin-left:15px;" class="badge badge-info">Customer</span>
+                }
+
+            </td>
+            <td>
+                @Html.ActionLink("C", "GrantCustomerRole", "Admin", new { customerId = item.Id }, new { @class = "btn btn-sm btn-info", title = "Grant customer permissions" })
+                @Html.ActionLink("E", "GrantEmployeeRole", "Admin", new { customerId = item.Id }, new { @class = "btn btn-sm btn-primary", title = "Grant employee permissions" })
+                @Html.ActionLink("A", "GrantAdminRole", "Admin", new { customerId = item.Id }, new { @class = "btn btn-sm btn-danger", title = "Grant admin permissions" })
+            <td>
+                @Html.ActionLink("×", "Delete", "Admin", new { customerId = item.Id }, new { @class = "btn btn-sm btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

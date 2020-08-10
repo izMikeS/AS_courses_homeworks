@@ -1,0 +1,65 @@
+﻿@model OnlineStore.BLL.Dtos.Models.TopProductsReportDto
+@using OnlineStore.Common;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "TopReport", FormMethod.Get))
+{
+    @Html.DropDownList("reportTime",
+        typeof(ReportTimeType).GetFields()
+        .Where((f, i) => i > 0)
+        .Select(f => new SelectListItem
+        {
+            Text = f.Name,
+            Value = f.Name
+        }).ToList(), "Select report timespan", new { @class = "custom-select", style = "margin-bottom:15px;" });
+    <input type="submit" class="btn btn-success" style="margin-bottom:15px;" } />
+}
+
+@if (ViewBag.IsReported && Model.Products != null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Category
+            </th>
+            <th>
+                Sales count
+            </th>
+            <th>
+                Sales sum
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @item.ProductName
+                </td>
+                <td>
+                    @item.CategoryName
+                </td>
+                <td>
+                    @item.SalesCount
+                </td>
+                <td>
+                    @item.SalesSum
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+<p>
+    @Html.ActionLink("< To products", "List", "Product", null, new { @class = "btn btn-light" })
+</p>
+
+@Html.Partial("_PagePartial", "page")
+

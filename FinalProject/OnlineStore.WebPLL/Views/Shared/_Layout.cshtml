@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark fixed-top bg-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            </button>
+            @Html.ActionLink("Online store", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="navbar-collapse collapse" id="navbarsupportedcontent">
+                <ul class="nav navbar-nav mr-auto">
+                    @if (User.IsInRole(RolesConstants.EMPLOYEE) || User.IsInRole(RolesConstants.ADMIN))
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle menu-fix" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Employee
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    @Html.ActionLink("Orders", "List", "Order", new { area = "" }, new { @class = "dropdown-item" })
+                                    <div class="dropdown-divider"></div>
+                                    @Html.ActionLink("Manufacturers", "List", "Manufacturer", new { area = "" }, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Categories", "List", "Category", new { area = "" }, new { @class = "dropdown-item" })
+                                    <div class="dropdown-divider"></div>
+                                    @Html.ActionLink("Top saled products", "Index", "TopReport", new { area = "" }, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Category sales", "Index", "CommonReport", new { area = "" }, new { @class = "dropdown-item" })
+                                    @Html.ActionLink("Global statistic", "Index", "StatisticReport", new { area = "" }, new { @class = "dropdown-item" })
+
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    @if (User.IsInRole(RolesConstants.ADMIN))
+                    {
+                        <li class="nav-item">
+                            <div class="dropdown">
+                                <a class="btn btn-secondary dropdown-toggle menu-fix" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    @Html.ActionLink("Customers", "List", "Customer", new { area = "" }, new { @class = "dropdown-item" })
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    <li class="nav-item">
+                        @using (Html.BeginForm("List", "Product", FormMethod.Get, new { @class = "d-flex" }))
+                        {
+                            <input type="text" class="form-control ml-5" name="searchQuery" placeholder="Search product...">
+                            <input type="submit" class="btn btn-dark ml-2" value="Search" />
+                        }
+                    </li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content" style="margin-top:20px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Presentation layer</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿@model string
+@*page parameter name*@
+
+<script>
+    function pageChange(value) {
+
+        let currentUrl = window.location.href;
+        let futurePage = @(Request.QueryString[Model]?? "1") + value;
+
+        if (futurePage <= 0) {
+            futurePage = 1;
+        }
+
+        if (currentUrl.includes("@Model")) {
+
+            window.location.href = currentUrl.replace("@Model=@Request.QueryString[Model]", "@Model=" + futurePage);
+        }
+        else {
+            if (currentUrl.includes('?')) {
+                window.location.href = currentUrl + "&@Model=" + futurePage;
+            }
+            else {
+                window.location.href = currentUrl + "?@Model=" + futurePage;
+            }
+        }
+    }
+</script>
+
+<hr />
+<div class="d-flex justify-content-around">
+    <input type="button" class="btn btn-light" value="< Prev" onclick="pageChange(-1)">
+    <h4 style="opacity:0.4">@(Request.QueryString[Model] ?? "1")</h4>
+    <input type="button" class="btn btn-light" value="Next >" onclick="pageChange(1)">
+</div>

@@ -1,0 +1,52 @@
+﻿@model OnlineStore.BLL.Dtos.Models.ProductStatisticReportDto
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("productId", (IEnumerable<SelectListItem>)ViewData["products"],
+    "Select product", new { @class = "custom-select", style = "margin-bottom:15px; margin-right:10px;" });
+    <input type="submit" class="btn btn-success" style="margin-bottom:15px;" } />
+}
+
+@if (ViewBag.IsReported)
+{
+    <script src="//cdn.anychart.com/js/latest/anychart.min.js" type="text/javascript"></script>
+    <script>
+    anychart.onDocumentLoad(function () {
+        var salesCount = [
+            { x: 'Week', y: @Model.WeekSalesCount },
+            { x: 'Month', y: @Model.MonthSalesCount },
+            { x: 'Year', y: @Model.YearSalesCount }
+        ];
+        var chartCount = anychart.bar();
+        chartCount.title('Sales count');
+        chartCount.addSeries(salesCount);
+        chartCount.container('container-count');
+        chartCount.draw();
+
+        var salesSum = [
+            { x: 'Week', y: @Model.WeekSalesSum },
+            { x: 'Month', y: @Model.MonthSalesSum },
+            { x: 'Year', y: @Model.YearSalesSum }
+        ];
+        var chartSum = anychart.bar();
+        chartSum.title('Sales sum');
+        chartSum.addSeries(salesSum);
+        chartSum.container('container-sum');
+        chartSum.draw();
+    });
+    </script>
+
+
+    <div id="container-count"></div>
+    <div id="container-sum"></div>
+
+}
+
+<p>
+    @Html.ActionLink("< To products", "List", "Product", null, new { @class = "btn btn-light" })
+</p>

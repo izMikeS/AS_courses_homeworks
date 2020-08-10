@@ -1,0 +1,49 @@
+﻿@model OnlineStore.WebPLL.Models.FullModels.ManufacturerFullViewModel
+
+@{
+    ViewBag.Title = "Manufacturer";
+}
+
+<h2>Manufacturer</h2>
+
+<div>
+    <div>
+        <table class="table">
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.Manufacturer.Name)</th>
+                <th>@Html.DisplayNameFor(m => Model.Manufacturer.ImgUrl)</th>
+            </tr>
+            <tr>
+                <td>@Html.DisplayFor(m => Model.Manufacturer.Name)</td>
+                <td><img class="img-ico" src="@Url.Content(Model.Manufacturer.ImgUrl ?? "n")" /></td>
+            </tr>
+        </table>
+
+
+    </div>
+    @if (Model.Products != null && Model.Products.Count != 0)
+    {
+        <h4>Products</h4>
+        <table class="table">
+
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.Products.FirstOrDefault().Name)</th>
+                <th>@Html.DisplayNameFor(m => Model.Products.FirstOrDefault().ImgUrl)</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Products)
+            {
+            <tr>
+                <td>@Html.DisplayFor(m => item.Name)</td>
+                <td><img class="img-ico" src="@Url.Content(item.ImgUrl ?? "n")" /></td>
+                <td>@Html.ActionLink("Details", "Details", "Product", new { id = item.Id }, null)</td>
+            </tr>
+            }
+        </table>
+    }
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "List")
+</p>

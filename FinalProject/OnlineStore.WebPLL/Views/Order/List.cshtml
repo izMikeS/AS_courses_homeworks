@@ -1,0 +1,114 @@
+﻿@using OnlineStore.Common;
+
+@model IEnumerable<OnlineStore.WebPLL.Models.ShortModels.OrderShortViewModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+@if (User.IsInRole(RolesConstants.ADMIN)
+|| User.IsInRole(RolesConstants.EMPLOYEE))
+{
+    <h2>Store orders</h2>
+}
+else
+{
+    <h2>Your orders</h2>
+}
+
+<div style="margin-bottom:30px;">
+    @using (Html.BeginForm("List", "Order", FormMethod.Get))
+    {
+        @Html.Label("Select order status")
+        <br />
+        @Html.DropDownList("status", typeof(OrderStatus).GetFields().Where((f, i) => i > 0)
+    .Select(f => new SelectListItem
+    {
+        Text = f.Name,
+        Value = f.Name
+    }), "All", new { @class = "form-control-sm custom-select" });
+
+        if (User.IsInRole(RolesConstants.ADMIN)
+      || User.IsInRole(RolesConstants.EMPLOYEE))
+        {
+            <br />
+            @Html.Label("Select customer") <br />
+            @Html.DropDownList("customerId", (List<SelectListItem>)ViewData["customers"], "All", new { @class = "form-control-sm custom-select" });
+            <br />
+            //todo: customers 10 at page element
+        }
+        if (User.IsInRole(RolesConstants.ADMIN)
+        || User.IsInRole(RolesConstants.EMPLOYEE))
+        {
+            <input type="submit" class="btn btn-success mt-3" />
+        }
+        else
+        {
+            <input type="submit" class="btn btn-success" />
+        }
+    }
+</div>
+
+<table class="table table-borderless">
+    <tr>
+        @if (User.IsInRole(RolesConstants.ADMIN)
+|| User.IsInRole(RolesConstants.EMPLOYEE))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </th>
+        }
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @if (Model.Count() == 0)
+    {
+       <tr><td><h3 class="ml-5">No results</h3></td></tr> 
+    }
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (User.IsInRole(RolesConstants.ADMIN)
+        || User.IsInRole(RolesConstants.EMPLOYEE))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.CustomerName)
+                </td>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id },
+               new { @class = "btn btn-sm btn-info" })
+
+                @if (User.IsInRole(RolesConstants.ADMIN)
+                    || User.IsInRole(RolesConstants.EMPLOYEE))
+                {
+                    if (item.Status == OrderStatus.Payed.ToString())
+                    {
+                        @Html.ActionLink("‎✓", "Finish", new { id = item.Id },
+                                new { @class = "btn btn-sm btn-success" })
+                    }
+
+                    @Html.ActionLink("×", "Delete", new { id = item.Id },
+                   new { @class = "btn btn-sm btn-danger" })
+
+                }
+            </td>
+        </tr>
+    }
+</table>
+@Html.Partial("_PagePartial", "page")

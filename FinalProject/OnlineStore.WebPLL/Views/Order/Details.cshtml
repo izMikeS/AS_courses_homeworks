@@ -1,0 +1,83 @@
+﻿@model OnlineStore.WebPLL.Models.FullModels.OrderFullViewModel
+
+@using OnlineStore.Common;
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div>
+    @if (User.IsInRole(RolesConstants.ADMIN)
+    || User.IsInRole(RolesConstants.EMPLOYEE))
+    {
+        <div style="display: flex; justify-content: space-between">
+            <h4>Order #@Model.Order.Id</h4>
+            <h4 style="opacity:.4;">@Model.Order.Status</h4>
+        </div>
+        <hr />
+
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Order.CustomerName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Order.CustomerName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Order.Date)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Order.Date)
+            </dd>
+
+
+        </dl>
+    }
+    @if (Model.Products != null && Model.Products.Count != 0)
+    {
+        <h4>Products</h4>
+        <table class="table">
+
+            <tr>
+                <th>@Html.DisplayNameFor(m => Model.Products.FirstOrDefault().Product.Name)</th>
+                <th>@Html.DisplayNameFor(m => Model.Products.FirstOrDefault().Product.ImgUrl)</th>
+                <th>@Html.DisplayNameFor(m => Model.Products.FirstOrDefault().Count)</th>
+                <th>Product total</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.Products)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => item.Product.Name)</td>
+                    <td><img class="img-ico" src="@Url.Content(item.Product.ImgUrl ?? "n")" /></td>
+                    <td>@Html.DisplayFor(m => item.Count)</td>
+                    <td>@(item.Product.Price * item.Count)</td>
+                    <td>@Html.ActionLink("Details", "Details", "Product", new { id = item.Product.Id }, null)</td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td></td>
+                <td><b>Total:</b></td>
+                <td>
+                    @Html.DisplayFor(model => model.TotalPrice)
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    }
+
+</div>
+<p>
+
+    <a class="btn btn-light" href="@(ViewBag.returnUrl ?? "/Order/List")">Back</a>
+
+
+    @if (Model.Order.Status == OrderStatus.Cart.ToString()
+        && !(User.IsInRole(RolesConstants.ADMIN ) || User.IsInRole(RolesConstants.EMPLOYEE )))
+    {
+        @Html.ActionLink("Buy", "Buy", "Order", new { id = Model.Order.Id }, new { @class = "btn btn-success" })
+    }
+</p>

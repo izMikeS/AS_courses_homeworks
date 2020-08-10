@@ -1,0 +1,52 @@
+﻿@model OnlineStore.WebPLL.Models.ShortModels.CategoryShortViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Category", FormMethod.Post,
+    new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Current image", htmlAttributes: new { @class = "control-label col-md-2" })
+
+
+            <img class="img-ico" src="@Url.Content(Model.ImgUrl ?? "n")" />
+            <input type="hidden" name="ImgUrl" value="@Model.ImgUrl" />
+
+            <div class="form-group">
+                @Html.Label("New image", htmlAttributes: new { @class = "control-label col-md-2" })
+
+                <div class="col-md-10">
+                    <input type="file" name="ImageFile" />
+                    @Html.ValidationMessageFor(model => model.ImgUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("< To products", "List", null, new { @class = "btn btn-light" })
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

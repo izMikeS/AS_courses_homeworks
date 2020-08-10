@@ -1,0 +1,90 @@
+﻿@model OnlineStore.BLL.Dtos.Models.CommonReportDto
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using OnlineStore.Common;
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownList("categoryId", (IEnumerable<SelectListItem>)ViewData["categories"],
+    "Select category", new { @class = "custom-select", style = "margin-bottom:15px; margin-right:10px;" });
+    @Html.DropDownList("reportTime",
+        typeof(ReportTimeType).GetFields()
+        .Where((f, i) => i > 0)
+        .Select(f => new SelectListItem
+        {
+            Text = f.Name,
+            Value = f.Name
+        }).ToList(), "Select report timespan", new { @class = "custom-select", style = "margin-bottom:15px;" });
+    <input type="submit" class="btn btn-success" style="margin-bottom:15px;" } />
+}
+
+@if (ViewBag.IsReported)
+{
+    <script src="//cdn.anychart.com/js/latest/anychart.min.js" type="text/javascript"></script>
+    <script>
+        anychart.onDocumentReady(function () {
+
+            var chart = anychart.pie([
+                ['Total sales sum', @Model.TotalSalesSum],
+                ['Sales sum at category', @Model.TotalSalesSumAtCategory],
+            ]);
+
+
+            chart.container('container');
+
+            chart.draw();
+        });
+    </script>
+    <h3>
+        Sales: @Model.SalesCountAtCategory
+    </h3>
+
+    <div id="container" style="height: 300px;"></div>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Manufacturer
+            </th>
+            <th>
+                Sales count
+            </th>
+            <th>
+                Sales sum
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.ManafacturerName
+                </td>
+                <td>
+                    @item.SalesCount
+                </td>
+                <td>
+                    @item.SalesSum
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+}
+<p>
+    @Html.ActionLink("< To products", "List", "Product", null, new { @class = "btn btn-light" })
+</p>
+
